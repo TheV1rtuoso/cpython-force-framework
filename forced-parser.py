@@ -62,9 +62,7 @@ if __name__ == "__main__":
         print(f"Usage: {argv[0]} <artifact_file> <output_dir>")
     shared_data = parse_shared_data_from_file(argv[1])
     output_dir = argv[2]
-    # Access parsed attributes
-    print("Mutex (as bytes):", shared_data.mutex)
-    print("Fork Count:", shared_data.fork_count)
+
     bt = BranchTree()
     branch_dict = defaultdict(lambda:0)
     dst_list: list[int] = []

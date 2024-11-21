@@ -42,13 +42,13 @@ void printRetListAsJSON(struct RetList ret_locations[MAX_FORCED_FORKS]) {
     printf("  ],\n");
 }
 
-void printCovListAsJSON(struct CovList ret_locations[MAX_FORCED_FORKS]) {
+void printCovListAsJSON(struct CovList cov_locations[MAX_FORCED_FORKS]) {
     printf("  \"cov_list\": [\n");
     for (int i = 0; i < MAX_FORCED_FORKS; i++) {
         printf("    [");
-        for (uint32_t j = 0; j < ret_locations[i].idx && j < RET_LEN; j++) {
-            printf("%d", ret_locations[i].loc[j]);
-            if (j < ret_locations[i].idx - 1) {
+        for (uint32_t j = 0; j < cov_locations[i].idx && j < RET_LEN; j++) {
+            printf("%d", cov_locations[i].loc[j]);
+            if (j < cov_locations[i].idx - 1) {
                 printf(", ");
             }
         }

@@ -1,0 +1,5 @@
+output/
+struct_to_json
+TODO
+.vscode/
+**/__pycache__/

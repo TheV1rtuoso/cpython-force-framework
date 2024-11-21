@@ -1,0 +1,4 @@
+[submodule "cpython"]
+	path = cpython
+	url = git@github.com:TheV1rtuoso/cpython-forced.git
+	branch = 3.12

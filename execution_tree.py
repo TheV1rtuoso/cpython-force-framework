@@ -97,7 +97,7 @@ class BranchTree:
         current.taken = branch.taken
         current.factual = branch.factual
 
-    def visualize_tree2(self,branch_dict: dict[BranchData, int], normal_connection: list[tuple[int,int]], jmp_list, ret_list):
+    def visualize_tree(self, tree_file, branch_dict: dict[BranchData, int], normal_connection: list[tuple[int,int]], jmp_list, ret_list):
         dot = Digraph(comment='Branch Tree')
         NODE_COLOR = "blue"
         for b, i in branch_dict.items(): 
@@ -118,7 +118,6 @@ class BranchTree:
             dot.node(str(x), label=f"Ret@{x}", color='black', style="filled", fillcolor=NODE_COLOR)
         for c in normal_connection:
             dot.edge(str(c[0]), str(c[1]), color="black")
-        print(jmp_list)
         for x in jmp_list:
             dot.node(str(x[0]), label=str(x[0]), color='black', style="filled", fillcolor=NODE_COLOR)
             dot.node(str(x[1]), label=str(x[1]), color='black', style="filled", fillcolor=NODE_COLOR)
@@ -126,39 +125,4 @@ class BranchTree:
         
 
         # Render the graph to a file (e.g., PNG or PDF)
-        dot.render(filename='branch_tree2', format='png', cleanup=True)
-        print("Tree visualization saved as 'branch_tree.png'")
-
-    def visualize_tree(self):
-        dot = Digraph(comment='Branch Tree')
-        NODE_COLOR = "blue"
-        def add_nodes_edges(edge:BranchEdge, parent_id=None):
-            if not edge:
-                return
-
-            # Define node color based on factual status
-            node = edge.node
-            node_id = str(node.loc)
-            label = f"{node.loc or ''}"
-            dot.node(str(node_id), label=label, color='black', style="filled", fillcolor=NODE_COLOR)
-
-            # Draw edges and recursively add nodes for children
-            if parent_id is not None:
-                if not node.fact:
-                    color = "red"
-                else:
-                    color = "yellow" if not node.full_fact else "green"
-                dot.edge(str(parent_id), str(node_id), color=color, label=f"{edge.count}")
-            add_nodes_edges(node.left, node_id)
-            add_nodes_edges(node.right, node_id)
-
-        # Start adding nodes and edges from the root
-        root_id = id(self.root)
-        label = f"{self.root.loc or ''}"
-        dot.node(str(root_id), label=label, color='black', style="filled", fillcolor=NODE_COLOR)
-        add_nodes_edges(self.root.left, root_id)
-        add_nodes_edges(self.root.right, root_id)
-
-        # Render the graph to a file (e.g., PNG or PDF)
-        dot.render(filename='branch_tree', format='png', cleanup=True)
-        print("Tree visualization saved as 'branch_tree.png'")
+        dot.render(filename=tree_file, format='png', cleanup=True)

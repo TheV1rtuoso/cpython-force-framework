@@ -6,7 +6,7 @@ FORCE_PYTHON=${FORCE_PYTHON_BUILDDIR}/python.exe
 OUTPUTDIR=output
 TARGETS=struct_to_json
 SND_ARG=$(word 2, $(MAKECMDGOALS))
-
+RUN_OUT := output/${SND_ARG}/
 
 build_forced_python: ${FORCE_PYTHON_MAKEFILE}
 	make -C ${FORCE_PYTHON_BUILDDIR}
@@ -23,7 +23,10 @@ all: ${OUT_FILES} ${DIS_FILES} ${TARGETS}
 	echo ${OUT_FILES}
 
 run: struct_to_json build_forced_python
-	${FORCE_PYTHON} ${SND_ARG} && ./struct_to_json forced_output.bin > collection_struct.json && ${BASE_PYTHON} forced-parser.py collection_struct.json
+	mkdir -p ${RUN_OUT}
+	FORCED_OUTPUT=${RUN_OUT}/forced_output.bin ${FORCE_PYTHON} ${SND_ARG} > ${RUN_OUT}/run-log.txt 
+	./struct_to_json ${RUN_OUT}/forced_output.bin > ${RUN_OUT}/collection_struct.json
+	${BASE_PYTHON} forced-parser.py ${RUN_OUT}/collection_struct.json ${RUN_OUT}
 
 ${OUTPUTDIR}:
 	mkdir -p ${OUTPUTDIR}

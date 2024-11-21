@@ -3,6 +3,7 @@ from collections import defaultdict
 import functools
 import itertools
 import json
+import os
 import struct
 from sys import argv
 import threading
@@ -57,8 +58,10 @@ def parse_shared_data_from_file(filename):
 
 # Example usage
 if __name__ == "__main__":
+    if len(argv) < 2: 
+        print(f"Usage: {argv[0]} <artifact_file> <output_dir>")
     shared_data = parse_shared_data_from_file(argv[1])
-
+    output_dir = argv[2]
     # Access parsed attributes
     print("Mutex (as bytes):", shared_data.mutex)
     print("Fork Count:", shared_data.fork_count)
@@ -74,9 +77,7 @@ if __name__ == "__main__":
             dst_list.append(x.dst)
             loc_list.append(x.loc)
     dst_list = sorted(list(set(dst_list))) #TODO sorted_set?
-    print(shared_data.ret_list)
     ret_list = sorted(list(set(itertools.chain(*shared_data.ret_list))))
-    print(shared_data.jmp_list)
     jmp_list = sorted(list(set(map(lambda x: tuple(x),itertools.chain(*shared_data.jmp_list)))))
     all_jmp_loc = []
     for i in jmp_list:
@@ -91,4 +92,5 @@ if __name__ == "__main__":
             normal_connection.append((d,all_loc_list[index]))
         else:
             normal_connection.append((d,"end"))
-    bt.visualize_tree2(branch_dict, normal_connection, jmp_list, ret_list)
+    tree_file = os.path.join(output_dir, "branch-tree")
+    bt.visualize_tree(tree_file, branch_dict, normal_connection, jmp_list, ret_list)

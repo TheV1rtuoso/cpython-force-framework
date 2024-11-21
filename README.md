@@ -4,7 +4,7 @@
 
 To fetch the adepted cpython code either clone the repository with: 
 
-`git clone --recurse-submodules git@github.com:TheV1rtuoso/cpython-framework.git`
+`git clone --recurse-submodules git@github.com:TheV1rtuoso/cpython-force-framework.git`
 
 or initialize the git submodules afterwards with:
 

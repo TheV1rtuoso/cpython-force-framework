@@ -24,8 +24,8 @@ all: ${OUT_FILES} ${DIS_FILES} ${TARGETS}
 
 run: struct_to_json build_forced_python
 	mkdir -p ${RUN_OUT}
-	FORCED_EXECUTION=1 FORCED_OUTPUT=${RUN_OUT}/forced_output.bin ${FORCE_PYTHON} ${SND_ARG} > ${RUN_OUT}/run-log.txt 
 	${FORCE_PYTHON} -m dis ${SND_ARG} > ${RUN_OUT}/dis-output.txt
+	FORCED_EXECUTION=1 FORCED_OUTPUT=${RUN_OUT}/forced_output.bin ${FORCE_PYTHON} ${SND_ARG} > ${RUN_OUT}/run-log.txt 
 	./struct_to_json ${RUN_OUT}/forced_output.bin > ${RUN_OUT}/collection_struct.json
 	${BASE_PYTHON} forced-parser.py ${RUN_OUT}/collection_struct.json ${RUN_OUT}
 

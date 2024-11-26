@@ -2,3 +2,6 @@
 	path = cpython
 	url = git@github.com:TheV1rtuoso/cpython-forced.git
 	branch = 3.12
+[submodule "programs/pypi_malware"]
+	path = programs/pypi_malware
+	url = https://github.com/nevercodecorrect/pypi_malware.git
